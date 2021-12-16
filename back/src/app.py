@@ -31,10 +31,16 @@ def register():
     user = User.query.filter_by(username=username).first()
     if user:
         return jsonify({'message': 'Username already exists'}), 400
+    if not username:
+        return jsonify({'message': 'Username is required'}), 400
 
     user = User.query.filter_by(email=email).first()
     if user:
         return jsonify({'message': 'Email already exists'}), 400
+    if not email:
+        return jsonify({'message': 'Email is required'}), 400
+    if not password:
+        return jsonify({'message': 'Password is required'}), 400
 
     user = User(username=username, email=email, password=password)
     user.save()
@@ -48,12 +54,18 @@ def login():
 
     user = User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({'message': 'User or password does not exist'}), 400
+        return jsonify({'message': 'User or password does not match'}), 400
 
     if user.password != password:
-        return jsonify({'message': 'User or password does not exist'}), 400
+        return jsonify({'message': 'User or password does not match'}), 400
 
     return jsonify({'token': create_access_token(identity=user.id)}), 200
+
+@app.route('/private', methods=['GET'])
+@jwt_required
+def private():
+    return jsonify({'message': 'private'}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
