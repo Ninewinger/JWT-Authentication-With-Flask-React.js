@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./views/Home";
@@ -11,15 +10,17 @@ import injectContext from './store/appContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/private" component={Private} />
-        <Route exact path="/signup" component={Signup} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/private" component={Private} />
+          <Route exact path="/signup" component={Signup} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
